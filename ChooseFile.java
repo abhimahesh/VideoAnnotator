@@ -198,7 +198,7 @@ public class ChooseFile extends JFrame implements ActionListener{
 		
 		double SH = bf.imageViewLabel.getHeight();
 		double SW = bf.imageViewLabel.getWidth();
-		String pathName = "/home/amahesh/sample/00001.jpg";
+		String pathName = bf.loadPath+"/"+bf.imageList[0];
 		BufferedImage bfimagetmp = null;
 		double imgH = 1;
 		double imgW = 1;
