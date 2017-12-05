@@ -186,7 +186,7 @@ public class BaseFrame implements ActionListener, MouseListener {
         //area.setBackground(Color.RED);
         
 		JPanel panel_control = new JPanel();
-		panel_control.setBounds(12, (int)(height*0.81)+25, (int)(width*0.8), (int)(height*0.11));
+		panel_control.setBounds(12, (int)(height*0.81)+25, (int)(width*0.8), (int)(height*0.15)-30);
 		panel_control.setBackground(Color.GRAY);
 		frame.getContentPane().add(panel_control);
 		panel_control.setLayout(null);
@@ -217,7 +217,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		slider.disable();
 		
 		JPanel panel_subControl = new JPanel();
-		panel_subControl.setBounds(12, 47, (int)(width*0.8)-30, 50);
+		panel_subControl.setBounds(12, 47, (int)(width*0.8)-30, (int)(0.5*((int)(height*0.15)-30)));
 		panel_subControl.setBackground(Color.GRAY);
 		panel_control.add(panel_subControl);
 		panel_subControl.setLayout(null);
@@ -517,18 +517,18 @@ public class BaseFrame implements ActionListener, MouseListener {
 		panel.add(btnUpdate);
 		
 		JLabel lblContactAmaheshiitkacin = new JLabel("maheshwari.nitrr@gmail.com");
-		lblContactAmaheshiitkacin.setBounds(12, 866, 206, 15);
+		lblContactAmaheshiitkacin.setBounds(12, 735, 206, 15);
 		panel_content.add(lblContactAmaheshiitkacin);
 		lblContactAmaheshiitkacin.setForeground(Color.WHITE);
 		
 		JLabel lblAbhishekMaheshwari = new JLabel("Abhishek Maheshwari");
-		lblAbhishekMaheshwari.setBounds(37, 854, 167, 15);
+		lblAbhishekMaheshwari.setBounds(37, 723, 167, 15);
 		panel_content.add(lblAbhishekMaheshwari);
 		lblAbhishekMaheshwari.setForeground(Color.WHITE);
 		btnUpdate.setEnabled(false);
 		
 		JPanel manualPanel = new JPanel();
-		manualPanel.setBounds(22, 406, 182, 137);
+		manualPanel.setBounds(12, 406, 192, 137);
 		panel_content.add(manualPanel);
 		manualPanel.setLayout(null);
 		
