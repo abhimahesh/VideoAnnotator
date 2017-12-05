@@ -171,7 +171,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		panel_viewer.setLayout(null);
 		
 		imageViewLabel = new JLabel("Image View Label");
-		imageViewLabel.setBounds(0,0, (int)(width*0.8), (int)(height*0.85));
+		imageViewLabel.setBounds(0,0, (int)(width*0.8), (int)(height*0.81));
 		panel_viewer.add(imageViewLabel);
 		//showImage(pos);
 		
