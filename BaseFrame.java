@@ -186,7 +186,7 @@ public class BaseFrame implements ActionListener, MouseListener {
         //area.setBackground(Color.RED);
         
 		JPanel panel_control = new JPanel();
-		panel_control.setBounds(12, (int)(height*0.81)+25, (int)(width*0.8), (int)(height*0.15)-30);
+		panel_control.setBounds(12, (int)(height*0.81)+25, (int)(width*0.8), (int)(height*0.18)-30);
 		panel_control.setBackground(Color.GRAY);
 		frame.getContentPane().add(panel_control);
 		panel_control.setLayout(null);
@@ -385,7 +385,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		
 		
 		JPanel panel_content = new JPanel();
-		panel_content.setBounds((int)(width*0.8)+25, 12, (int)(width*0.18)-12, (int)(0.93*height));
+		panel_content.setBounds((int)(width*0.8)+25, 12, (int)(width*0.18)-12, (int)(0.95*height));
 		panel_content.setBackground(Color.GRAY);
 		frame.getContentPane().add(panel_content);
 		panel_content.setLayout(null);
