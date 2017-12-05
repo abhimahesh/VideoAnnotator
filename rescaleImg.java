@@ -23,16 +23,16 @@ public class rescaleImg {
 		Vector <Double> tmp = new Vector <Double>();
 //		System.out.println(x*sx);
 //		System.out.println(y*sy);
-		tmp.add(x*sx);
-		tmp.add(y*sy);
+		tmp.add(x/sx);
+		tmp.add(y/sy);
 		return tmp;
 	}
 	
 	public Vector<Double> coorFromXML(double x , double y) {
 		Vector <Double> tmp = new Vector <Double>();
 //		System.out.println(x/sx);System.out.println(y/sy);
-		tmp.add(x/sx);
-		tmp.add(y/sy);
+		tmp.add(x*sx);
+		tmp.add(y*sy);
 		return tmp;
 	}
 	
