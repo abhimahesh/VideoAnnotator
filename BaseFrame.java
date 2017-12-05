@@ -94,7 +94,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 	public JLabel contentModelLbl ;
 	public JButton btnEdit;
 	public JButton btnUpdate;
-	public rescaleImg rescaleObj;
+	public rescaleImg rescaleObj = null;
 	
 	public String loadPath = null;
 	public  String xmlPath = null;
@@ -355,17 +355,17 @@ public class BaseFrame implements ActionListener, MouseListener {
 			    }
 			}
 		});
-		btnSAVE.setBounds(829, 12, 77, 25);
+		btnSAVE.setBounds(645, 12, 77, 25);
 		panel_subControl.add(btnSAVE);
 		btnSAVE.setEnabled(false);
 		
 		btnExit = new JButton("Exit");
 		btnExit.addActionListener(this);
-		btnExit.setBounds(918, 12, 77, 25);
+		btnExit.setBounds(734, 12, 77, 25);
 		panel_subControl.add(btnExit);
 		
 		lblFrame = new JLabel("Frame");
-		lblFrame.setBounds(600, 12, 116, 25);
+		lblFrame.setBounds(511, 12, 116, 25);
 		lblFrame.setForeground(Color.WHITE);
 		panel_subControl.add(lblFrame);
 		
