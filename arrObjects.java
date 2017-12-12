@@ -61,7 +61,7 @@ public class arrObjects {
 	
 					Element fileName = doc.createElement("filename");
 					
-					System.out.println(imageName.get(i));
+					//System.out.println(imageName.get(i));
 					
 					fileName.appendChild(doc.createTextNode(imageName.get(i)));  				
 					rootElement.appendChild(fileName);
@@ -127,7 +127,7 @@ public class arrObjects {
 	
 					transformer.transform(source, result);
 	
-					System.out.println("File saved!");
+					//System.out.println("File saved!");
 	
 				  } catch (ParserConfigurationException pce) {
 					pce.printStackTrace();
@@ -139,3 +139,4 @@ public class arrObjects {
 	
 	
 }
+

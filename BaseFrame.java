@@ -58,14 +58,13 @@ public class BaseFrame implements ActionListener, MouseListener {
 
 	public JFrame frame;
 //	public static String [] msg = new String[] {"None","None","None","None"};
-	public static Vector<Vector<Integer>> msg = new Vector<Vector<Integer>>();
+//	public static Vector<Vector<Integer>> msg = new Vector<Vector<Integer>>();
 	public static Vector cb_items = new Vector() ;
-	public static DefaultComboBoxModel mdl = new DefaultComboBoxModel(cb_items);
+//	public static DefaultComboBoxModel mdl = new DefaultComboBoxModel(cb_items);
 	
-	private JTextField contentNumberTf;
+	public JTextField contentNumberTf;
 	public JButton btnNewObject ;
 	public JButton btnSAVE ;
-	private Resizable res;
 	private JButton btnExit ;
 	public JButton btnPausePlay;
 	public JPanel panel_viewer; 
@@ -93,7 +92,6 @@ public class BaseFrame implements ActionListener, MouseListener {
 	public JLabel contentMakeLbl ;
 	public JLabel contentModelLbl ;
 	public JButton btnEdit;
-	public JButton btnUpdate;
 	public rescaleImg rescaleObj = null;
 	
 	public String loadPath = null;
@@ -390,49 +388,45 @@ public class BaseFrame implements ActionListener, MouseListener {
 		frame.getContentPane().add(panel_content);
 		panel_content.setLayout(null);
 		
-		btnNewObject = new JButton("+");
+		btnNewObject = new JButton("New Object");
 		btnNewObject.addActionListener(this);
 		btnNewObject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
-		btnNewObject.setBounds(12, 12, 44, 25);
+		btnNewObject.setBounds(48, 12, 115, 25);
 		panel_content.add(btnNewObject);
-
+		btnNewObject.setEnabled(false);
 		cb_items.add("None");
 //		cb_items.add("Car 2");
-				
-		JComboBox comboBox = new JComboBox(mdl);
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				int index = comboBox.getSelectedIndex();
-//				System.out.println(index);
-				if(index!=0) {
-					int f = msg.get(index-1).get(0);
-					int b = msg.get(index-1).get(1);
-	//				System.out.println("f : "+f+",   b :  "+b);
-					contentVehLbl.setText((String)arrOb.properties.get(f).get(b).get(0));
-					contentMakeLbl.setText((String)arrOb.properties.get(f).get(b).get(1));
-					contentModelLbl.setText((String)arrOb.properties.get(f).get(b).get(2));
-					contentNumberTf.setText((String)arrOb.properties.get(f).get(b).get(3));
-					btnEdit.enable();
-					btnUpdate.enable();
-				}
-				else {
-					contentVehLbl.setText("Vehicle Type");
-					contentMakeLbl.setText("Vehicle Make");
-					contentModelLbl.setText("Vehicle Model");
-					contentNumberTf.setText("Vehicle Number");
-					btnEdit.disable();
-					btnUpdate.disable();
-				}
-				contentNumberTf.setEditable(false);
-			}
-		});
-		comboBox.setBounds(68, 12, 136, 24);
-		panel_content.add(comboBox);
-		
+//				
+//		JComboBox comboBox = new JComboBox(mdl);
+//		comboBox.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent ae) {
+//				int index = comboBox.getSelectedIndex();
+////				System.out.println(index);
+//				if(index!=0) {
+//					int f = msg.get(index-1).get(0);
+//					int b = msg.get(index-1).get(1);
+//	//				System.out.println("f : "+f+",   b :  "+b);
+//					contentVehLbl.setText((String)arrOb.properties.get(f).get(b).get(0));
+//					contentMakeLbl.setText((String)arrOb.properties.get(f).get(b).get(1));
+//					contentModelLbl.setText((String)arrOb.properties.get(f).get(b).get(2));
+//					contentNumberTf.setText((String)arrOb.properties.get(f).get(b).get(3));
+//				}
+//				else {
+//					contentVehLbl.setText("Vehicle Type");
+//					contentMakeLbl.setText("Vehicle Make");
+//					contentModelLbl.setText("Vehicle Model");
+//					contentNumberTf.setText("Vehicle Number");
+//				}
+//				contentNumberTf.setEditable(false);
+//			}
+//		});
+//		comboBox.setBounds(68, 12, 136, 24);
+//		panel_content.add(comboBox);
+//		
 		JPanel panel = new JPanel();
 		panel.setBounds(12, 49, 192, 219);
 		panel.setBackground(Color.LIGHT_GRAY);
@@ -468,53 +462,11 @@ public class BaseFrame implements ActionListener, MouseListener {
 		rdbtnOutOfViewframe.setBounds(12, 159, 172, 23);
 		panel.add(rdbtnOutOfViewframe);
 		
-		btnEdit = new JButton("Edit");
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int index = comboBox.getSelectedIndex();
-				if(index!=0) {
-					contentNumberTf.setEditable(true);
-					btnUpdate.enable();
-				}
-				else {
-					contentNumberTf.setEditable(false);
-					btnUpdate.disable();
-				}
-			}
-		});
-		btnEdit.setBounds(12, 190, 77, 17);
+		btnEdit = new JButton("Update Info");
+		btnEdit.addActionListener(this);
+		btnEdit.setBounds(22, 190, 158, 17);
 		panel.add(btnEdit);
-		btnEdit.disable();
-		
-		btnUpdate = new JButton("Update");
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int index = comboBox.getSelectedIndex();
-				if(cb_items.size()==1) {
-					contentVehLbl.setText("Vehicle Type");
-					contentMakeLbl.setText("Vehicle Make");
-					contentModelLbl.setText("Vehicle Model");
-					contentNumberTf.setText("Vehicle Number");
-				}
-				else if(index!=0) {
-					int f = msg.get(index-1).get(0);
-					int b = msg.get(index-1).get(1);
-	//				System.out.println("f : "+f+",   b :  "+b);
-					String new_num = contentNumberTf.getText().toString().toUpperCase();
-					arrOb.properties.get(f).get(b).set(3, new_num);
-					btnUpdate.disable();
-				}else {
-					contentVehLbl.setText("Vehicle Type");
-					contentMakeLbl.setText("Vehicle Make");
-					contentModelLbl.setText("Vehicle Model");
-					contentNumberTf.setText("Vehicle Number");
-				}
-				contentNumberTf.setEditable(false);
-				
-			}
-		});
-		btnUpdate.setBounds(90, 190, 90, 17);
-		panel.add(btnUpdate);
+		btnEdit.setEnabled(false);
 		
 		JLabel lblContactAmaheshiitkacin = new JLabel("maheshwari.nitrr@gmail.com");
 		lblContactAmaheshiitkacin.setBounds(12, 735, 206, 15);
@@ -525,7 +477,6 @@ public class BaseFrame implements ActionListener, MouseListener {
 		lblAbhishekMaheshwari.setBounds(37, 723, 167, 15);
 		panel_content.add(lblAbhishekMaheshwari);
 		lblAbhishekMaheshwari.setForeground(Color.WHITE);
-		btnUpdate.setEnabled(false);
 		
 		JPanel manualPanel = new JPanel();
 		manualPanel.setBounds(12, 406, 192, 137);
@@ -537,11 +488,11 @@ public class BaseFrame implements ActionListener, MouseListener {
 		manualPanel.add(lblManualControl);
 		
 		JLabel lblResetFrame = new JLabel("Clear Frame");
-		lblResetFrame.setBounds(12, 39, 93, 15);
+		lblResetFrame.setBounds(0, 39, 93, 15);
 		manualPanel.add(lblResetFrame);
 		
 		mcFrmTxtField = new JTextField();
-		mcFrmTxtField.setBounds(105, 37, 33, 19);
+		mcFrmTxtField.setBounds(92, 39, 33, 19);
 		manualPanel.add(mcFrmTxtField);
 		mcFrmTxtField.setColumns(10);
 		
@@ -558,7 +509,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 				}
 			}
 		});
-		btnmcFrmaeClear.setBounds(66, 63, 53, 25);
+		btnmcFrmaeClear.setBounds(137, 34, 53, 25);
 		manualPanel.add(btnmcFrmaeClear);
 	}
 	public void getImages() {
@@ -628,10 +579,22 @@ public class BaseFrame implements ActionListener, MouseListener {
 				ChooseFile chfOb = new ChooseFile(this);
 				chfOb.setLocation((int)(width/3), (int)(height/3));
 		        chfOb.setVisible(true);
+		        btnEdit.setEnabled(true);
+		        btnNewObject.setEnabled(true);
 			}
 		}
 		else if(e.getSource().equals(btnExit)) {
 			System.exit(1);
+		}
+		else if(e.getSource().equals(btnEdit)) {
+			if(mf.rect!=null){
+				//System.out.println(mf.rect);
+				frame.setEnabled(false);
+				NewObjectPopUp newOb = new NewObjectPopUp(this,mf,arrOb);
+		        newOb.setLocation((int)(width/3), (int)(height/3));
+		        newOb.setVisible(true);
+		        // mf.resetImage() is called from OKbutton  ofNewObjectPopUp 
+			}
 		}
 	}
 
@@ -644,8 +607,6 @@ public class BaseFrame implements ActionListener, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		panel_viewer.requestFocus();
-        res.repaint();
 	}
 
 	@Override
@@ -666,3 +627,4 @@ public class BaseFrame implements ActionListener, MouseListener {
 		
 	}
 }
+

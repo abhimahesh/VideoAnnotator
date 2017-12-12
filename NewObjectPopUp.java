@@ -3,6 +3,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.EventQueue;
 import java.awt.Frame;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,6 +21,7 @@ import java.util.Vector;
 import javax.swing.JComboBox;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -33,7 +36,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 	public final JComboBox cb_make = new JComboBox();
 	public final JComboBox cb_model = new JComboBox();
 	
-	private ComboBoxModel[] make = new ComboBoxModel[15];
+	private ComboBoxModel[] make = new ComboBoxModel[6];
 	private ComboBoxModel[][] model = new ComboBoxModel[15][15];
 	public JTextField tf_number;
 	arrObjects arrOb = null;
@@ -106,9 +109,33 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 				}
 			}
 		}
+		int indexCategory = 0;
+		for(int z = 0;z<categories.length;++z) {
+			if(categories[z].equals(bf.contentVehLbl.getText().toString())) {
+				indexCategory = z;
+				break;
+			}
+		}
+		cb_category.setSelectedIndex(indexCategory);
 		
-		cb_make.setModel(make[0]);
-		cb_model.setModel(model[1][0]);
+		int indexMake = 0;
+		for(int z = 0;z<make[indexCategory].getSize();++z) {
+			if(make[indexCategory].getElementAt(z).equals(bf.contentMakeLbl.getText().toString())) {
+				indexMake = z;
+				break;
+			}
+		}
+		cb_make.setModel(make[indexCategory]);
+		cb_make.setSelectedIndex(indexMake);
+		int indexModel = 0;
+		for(int z = 0;z<model[indexCategory][indexMake].getSize();++z) {
+			if(model[indexCategory][indexMake].getElementAt(z).equals(bf.contentModelLbl.getText().toString())) {
+				indexModel = z;
+				break;
+			}
+		}
+		cb_model.setModel(model[indexCategory][indexMake]);
+		cb_model.setSelectedIndex(indexModel);
 		
 		contentPane.add(cb_category);
 		contentPane.add(cb_make);
@@ -119,8 +146,15 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		tf_number.setBounds(147, 139, 167, 19);
 		contentPane.add(tf_number);
 		tf_number.setColumns(10);
-		tf_number.disable();
-		
+		tf_number.setText(bf.contentNumberTf.getText());
+		if(cb_category.getSelectedIndex()!=1) {
+			tf_number.setText("Not Required");
+			tf_number.setEnabled(false);
+		}
+		else { 
+			tf_number.setEnabled(true);
+		}
+				
 		JLabel lblCategory = new JLabel("Category :");
 		lblCategory.setBounds(29, 36, 89, 15);
 		contentPane.add(lblCategory);
@@ -143,37 +177,39 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 				mf.oimg=mf.deepCopy(mf.setimg);
 				String stmp[] = new String[] {(String)cb_category.getSelectedItem(), (String) cb_make.getSelectedItem(),(String) cb_model.getSelectedItem(),(String) tf_number.getText().toUpperCase()};
 				Vector tmp = new Vector(Arrays.asList(stmp)); 
-				//BaseFrame.msg.addElement(tmp);
 
-				int l = BaseFrame.mdl.getSize();
-				int count=0;
-				
-				for(int i =0;i<l;++i) {
-					if(BaseFrame.mdl.getElementAt(i).toString().split("_")[0].equals((String)  cb_category.getSelectedItem()))
-						count++;
-				}
-
-				BaseFrame.mdl.addElement(""+((String)  cb_category.getSelectedItem())+"_"+(count+1));
-				
-//		        for(int i =0;i<4;++i)
-//		        	System.out.println(stmp[i]);
-//				System.out.println("aaaaaaaaaa");
 				Vector<String> input = new Vector<String>();
 				input.add(stmp[0]);input.add(stmp[1]);input.add(stmp[2]);input.add(stmp[3]);
 				
 //				System.out.println(bf.pos+"    :     "+mf.rect);
 				arrOb.recvObj(bf.pos, mf.rect, input);
 				
-				int cur_frame = bf.pos;
+				//Setting label on top of rectangle 
+				Graphics2D g = mf.setimg.createGraphics();
+				g.drawImage(mf.oimg,0,0,null);
+				Vector<Vector<String>> tmpProperty = new Vector<Vector<String>>(); tmpProperty.add(input);
+				mf.setLabelOnRect(0,tmpProperty, mf.rect,g);
+				mf.oimg=mf.deepCopy(mf.setimg);
+				ImageIcon ic=new ImageIcon(mf.setimg);		
+				mf.imglbl.setIcon(ic);
+				g.dispose();
+				//End of setting label on rectangle
 				
-				int cur_box_in_cur_frame = arrOb.boundingBoxes.get(cur_frame).size()-1;
-				Vector<Integer>tmp_vec = new Vector<Integer>();
-				tmp_vec.add(cur_frame); tmp_vec.add(cur_box_in_cur_frame);
-				bf.msg.addElement(tmp_vec);
-				
+//				int cur_frame = bf.pos;
+//				
+//				int cur_box_in_cur_frame = arrOb.boundingBoxes.get(cur_frame).size()-1;
+//				Vector<Integer>tmp_vec = new Vector<Integer>();
+//				tmp_vec.add(cur_frame); tmp_vec.add(cur_box_in_cur_frame);
+//				bf.msg.addElement(tmp_vec);
+//				
 				mf.resetImg();						
 				dispose();
 				bf.frame.enable();
+				
+				bf.contentVehLbl.setText("Vehicle Type");
+				bf.contentMakeLbl.setText("Vehicle Make");
+				bf.contentModelLbl.setText("Vehicle Model");
+				bf.contentNumberTf.setText("Vehicle Number");
 			}
 			
 		});
@@ -207,12 +243,13 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 	
 		if(cb_category.getSelectedIndex()!=1) {
 			tf_number.setText("Not Required");
-			tf_number.disable();
+			tf_number.setEnabled(false);
 		}
 		else {
-			tf_number.enable();
-			tf_number.setText("");
+			if(tf_number.getText().equals("Not Required"))
+				tf_number.setText("");
+			tf_number.setEnabled(true);
 		}
-		
 	}
 }
+

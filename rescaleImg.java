@@ -16,6 +16,10 @@ public class rescaleImg {
 	public void calScale() {
 		sx = SW/IW;
 		sy = SH/IH;
+//		System.out.println(SH);
+//		System.out.println(SW);
+//		System.out.println(IH);
+//		System.out.println(IW);
 //		System.out.println(sx);
 //		System.out.println(sy);
 	}
@@ -37,3 +41,4 @@ public class rescaleImg {
 	}
 	
 }
+

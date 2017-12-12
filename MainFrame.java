@@ -1,6 +1,8 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -90,14 +93,19 @@ public class MainFrame {
 		//pastiing boxes from xml in that frame
 		Graphics2D g = setimg.createGraphics();
 		g.drawImage(oimg,0,0,null);
+	
 		int s = bff.arrOb.boundingBoxes.get(bff.pos).size();
 		Rectangle rect = null;
 		Vector <Rectangle> recVec = bff.arrOb.boundingBoxes.get(bff.pos);
+		Vector<Vector<String>> recPropertyVec = bff.arrOb.properties.get(bff.pos);
 		for(int i = 0;i<s;++i) {
 			rect = recVec.get(i);
 			if(rect!=null){
+				//Setting label on top of rectangle
+				setLabelOnRect(i,recPropertyVec, rect,g);
+
 				g.setColor(Color.RED);
-		        g.drawRect(rect.x, rect.y, rect.width,rect.height);        
+		        g.drawRect(rect.x, rect.y, rect.width,rect.height); 
 		        g.setColor(new Color(255,255,255,150));
 		        g.fill(rect);
 			}
@@ -111,10 +119,10 @@ public class MainFrame {
 	public void drawBox(){	
 		Graphics2D g = setimg.createGraphics();
 		g.drawImage(oimg,0,0,null);
-
+//		g.setFont(new Font("",0,10));
 		if(rect!=null){
 			g.setColor(Color.RED);
-	        g.drawRect(rect.x, rect.y, rect.width,rect.height);        
+	        g.drawRect(rect.x, rect.y, rect.width,rect.height);  
 	        g.setColor(new Color(255,255,255,150));
 	        g.fill(rect);
 		}
@@ -221,5 +229,25 @@ public class MainFrame {
 	public static void main(String[] args) {
 //		mf.control();
 	}	
-
+	public void setLabelOnRect(int i,Vector<Vector<String>> recPropertyVec, Rectangle rect, Graphics g) { 
+		String str = "";
+		if(!recPropertyVec.get(i).get(0).equals("None") && !recPropertyVec.get(i).get(0).equals(""))
+			str += recPropertyVec.get(i).get(0);
+		if(!recPropertyVec.get(i).get(1).equals("None") && !recPropertyVec.get(i).get(1).equals(""))
+			{str += ","; str+=recPropertyVec.get(i).get(1);}
+		if(!recPropertyVec.get(i).get(2).equals("None") && !recPropertyVec.get(i).get(2).equals(""))
+			{str += ",";str+=recPropertyVec.get(i).get(2);}
+		if(!recPropertyVec.get(i).get(3).equals("None") && !recPropertyVec.get(i).get(3).equals("")&& !recPropertyVec.get(i).get(3).equals("NOT REQUIRED"))
+			{str += ",";str+=recPropertyVec.get(i).get(3);}
+						
+		Color txtColor = Color.WHITE;
+		Color bgColor = Color.BLACK;
+		FontMetrics fm = g.getFontMetrics();
+		Rectangle2D txtRect = fm.getStringBounds(str, g);
+		g.setColor(bgColor);
+		g.fillRect(rect.x, rect.y-fm.getAscent(), (int)txtRect.getWidth(), (int)txtRect.getHeight());
+		g.setColor(txtColor);
+		g.drawString(str,rect.x,rect.y);
+	}
 }
+
