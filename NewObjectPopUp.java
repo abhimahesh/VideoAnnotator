@@ -204,7 +204,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 //				
 				mf.resetImg();						
 				dispose();
-				bf.frame.enable();
+				bf.frame.setEnabled(true);
 				
 				bf.contentVehLbl.setText("Vehicle Type");
 				bf.contentMakeLbl.setText("Vehicle Make");
@@ -220,7 +220,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		btnCancel.addActionListener(new ActionListener() {
 			   public void actionPerformed(ActionEvent e){
 			      dispose();
-			      bf.frame.enable();
+			      bf.frame.setEnabled(true);
 			   }
 			});
 		btnCancel.setBounds(110, 202, 81, 25);
@@ -230,6 +230,16 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		cb_category.addActionListener(this);
 		cb_make.addActionListener(this);
 		cb_model.addActionListener(this);
+		
+		addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                e.getWindow().dispose();
+                bf.frame.setEnabled(true);
+            }
+        });
 	}
 
 	@Override
@@ -252,4 +262,3 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		}
 	}
 }
-

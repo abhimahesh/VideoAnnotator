@@ -212,7 +212,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		slider.setPaintTicks(true);
 		
 		panel_control.add(slider);
-		slider.disable();
+		slider.setEnabled(false);
 		
 		JPanel panel_subControl = new JPanel();
 		panel_subControl.setBounds(12, 47, (int)(width*0.8)-30, (int)(0.5*((int)(height*0.15)-30)));
@@ -566,7 +566,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		if(e.getSource().equals(btnNewObject )) {
 	        if(mf.rect!=null){
 				//System.out.println(mf.rect);
-				frame.disable();
+				frame.setEnabled(false);
 				NewObjectPopUp newOb = new NewObjectPopUp(this,mf,arrOb);
 		        newOb.setLocation((int)(width/3), (int)(height/3));
 		        newOb.setVisible(true);
@@ -575,7 +575,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		}
 		else if(e.getSource().equals(btnLoad)) {
 			if(pos==0) {
-				frame.disable();
+				frame.setEnabled(false);
 				ChooseFile chfOb = new ChooseFile(this);
 				chfOb.setLocation((int)(width/3), (int)(height/3));
 		        chfOb.setVisible(true);
@@ -627,4 +627,3 @@ public class BaseFrame implements ActionListener, MouseListener {
 		
 	}
 }
-

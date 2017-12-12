@@ -269,4 +269,3 @@ public class MyMouseAdapter implements MouseListener, MouseMotionListener {
 	}
 //	
 }
-

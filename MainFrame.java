@@ -250,4 +250,3 @@ public class MainFrame {
 		g.drawString(str,rect.x,rect.y);
 	}
 }
-

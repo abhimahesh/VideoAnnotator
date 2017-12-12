@@ -7,6 +7,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Hashtable;
@@ -113,6 +115,16 @@ public class ChooseFile extends JFrame implements ActionListener{
 		btnXml.setEnabled(false);
 		txtSelectXmlFile.setEnabled(false);
 		lblXmlFilePath.setEnabled(false);
+		
+		addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                e.getWindow().dispose();
+                bf.frame.setEnabled(true);
+            }
+        });
 }
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -172,14 +184,14 @@ public class ChooseFile extends JFrame implements ActionListener{
 					    JOptionPane.ERROR_MESSAGE);
 			}
 			dispose();
-			bf.frame.enable();	
+			bf.frame.setEnabled(true);
 //			System.out.println("abhishekkkkkkk");
 		}
 		else if(e.getSource().equals(btnCancel)) {
-			bf.frame.enable();
+			bf.frame.setEnabled(true);
 //			callingpartialBaseFunction();
 			dispose();
-			bf.frame.enable();
+			bf.frame.setEnabled(true);
 		}
 		else if(e.getSource().equals(chkbx)) {
 			selected = chkbx.isSelected();
@@ -231,11 +243,10 @@ public class ChooseFile extends JFrame implements ActionListener{
 		labelTable.put( new Integer( bf.slider_MAX ), new JLabel(""+bf.slider_MAX) );
 		bf.slider.setLabelTable( labelTable );
 		bf.slider.setPaintLabels(true);
-		bf.slider.enable();
-		bf.frame.enable();
+		bf.slider.setEnabled(true);
+		bf.frame.setEnabled(true);
 		bf.btnSAVE.setEnabled(true);
 		bf.btnPausePlay.setEnabled(true);
 		
 	}
 }
-
