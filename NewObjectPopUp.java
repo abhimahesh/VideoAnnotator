@@ -26,6 +26,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JRadioButton;
 
 public class NewObjectPopUp extends JFrame implements ActionListener{
 
@@ -39,6 +40,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 	private ComboBoxModel[] make = new ComboBoxModel[6];
 	private ComboBoxModel[][] model = new ComboBoxModel[15][15];
 	public JTextField tf_number;
+	public JRadioButton rdbtnNewObObjectOcculded ;
 	arrObjects arrOb = null;
 	BaseFrame bf = null;
 	MainFrame mf  = null;
@@ -175,12 +177,13 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mf.oimg=mf.deepCopy(mf.setimg);
-				String stmp[] = new String[] {(String)cb_category.getSelectedItem(), (String) cb_make.getSelectedItem(),(String) cb_model.getSelectedItem(),(String) tf_number.getText().toUpperCase()};
+				String stmp[] = new String[] {(String)cb_category.getSelectedItem(), (String) cb_make.getSelectedItem(),(String) cb_model.getSelectedItem(),(String) tf_number.getText().toUpperCase(), String.valueOf(rdbtnNewObObjectOcculded.isSelected())};
 				Vector tmp = new Vector(Arrays.asList(stmp)); 
-
-				Vector<String> input = new Vector<String>();
-				input.add(stmp[0]);input.add(stmp[1]);input.add(stmp[2]);input.add(stmp[3]);
 				
+				Vector<String> input = new Vector<String>();
+				input.add(stmp[0]);input.add(stmp[1]);input.add(stmp[2]);input.add(stmp[3]);input.add(stmp[4]);
+				
+				//Sending data of this object to arrObjects class
 //				System.out.println(bf.pos+"    :     "+mf.rect);
 				arrOb.recvObj(bf.pos, mf.rect, input);
 				
@@ -210,6 +213,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 				bf.contentMakeLbl.setText("Vehicle Make");
 				bf.contentModelLbl.setText("Vehicle Model");
 				bf.contentNumberTf.setText("Vehicle Number");
+				bf.rdbtnObjectOccluded.setSelected(false);
 			}
 			
 		});
@@ -225,6 +229,12 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 			});
 		btnCancel.setBounds(110, 202, 81, 25);
 		contentPane.add(btnCancel);
+		
+		rdbtnNewObObjectOcculded = new JRadioButton("Object Occulded");
+		rdbtnNewObObjectOcculded.setBounds(134, 166, 149, 23);
+		contentPane.add(rdbtnNewObObjectOcculded);
+		if(bf.rdbtnObjectOccluded.isSelected())
+			rdbtnNewObObjectOcculded.setSelected(true);
 		
 		
 		cb_category.addActionListener(this);

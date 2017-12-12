@@ -135,6 +135,7 @@ public class MyMouseAdapter implements MouseListener, MouseMotionListener {
 			bff.contentMakeLbl.setText("Vehicle Make");
 			bff.contentModelLbl.setText("Vehicle Model");
 			bff.contentNumberTf.setText("Vehicle Number");
+			bff.rdbtnObjectOccluded.setSelected(false);
 		}
 	}
 
@@ -244,6 +245,8 @@ public class MyMouseAdapter implements MouseListener, MouseMotionListener {
 			        bff.contentMakeLbl.setText(tmpProperty.get(1));
 			        bff.contentModelLbl.setText(tmpProperty.get(2));
 			        bff.contentNumberTf.setText(tmpProperty.get(3));
+			        if(tmpProperty.get(4).equals("true"))
+			        	bff.rdbtnObjectOccluded.setSelected(true);
 				}
 		}
 		holding = false;

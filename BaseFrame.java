@@ -69,6 +69,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 	public JButton btnPausePlay;
 	public JPanel panel_viewer; 
 	private JPanel area ;
+	public JRadioButton rdbtnObjectOccluded;
 	public JLabel imageViewLabel ;
 	int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() -60;
 	int height = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() -60;
@@ -452,10 +453,11 @@ public class BaseFrame implements ActionListener, MouseListener {
 		contentNumberTf.setColumns(10);
 		contentNumberTf.setEditable(false);;
 		
-		JRadioButton rdbtnObjectOccluded = new JRadioButton("Object Occluded");
+		rdbtnObjectOccluded = new JRadioButton("Object Occluded");
 		rdbtnObjectOccluded.setBackground(Color.LIGHT_GRAY);
 		rdbtnObjectOccluded.setBounds(12, 129, 172, 23);
 		panel.add(rdbtnObjectOccluded);
+		rdbtnObjectOccluded.setSelected(false);
 		
 		JRadioButton rdbtnOutOfViewframe = new JRadioButton("Out of ViewFrame");
 		rdbtnOutOfViewframe.setBackground(Color.LIGHT_GRAY);
