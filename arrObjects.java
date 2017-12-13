@@ -73,7 +73,7 @@ public class arrObjects {
 						Element type = doc.createElement("type");
 						type.appendChild(doc.createTextNode(properties.get(i).get(j).get(0)));
 						object.appendChild(type);
-		
+						
 						Element make = doc.createElement("make");
 						make.appendChild(doc.createTextNode(properties.get(i).get(j).get(1)));
 						object.appendChild(make);
@@ -85,6 +85,10 @@ public class arrObjects {
 						Element number = doc.createElement("number");
 						number.appendChild(doc.createTextNode(properties.get(i).get(j).get(3)));
 						object.appendChild(number);
+						
+						Element occlusion = doc.createElement("occlusion");
+						occlusion.appendChild(doc.createTextNode(properties.get(i).get(j).get(4)));
+						object.appendChild(occlusion);
 						
 						Element bndbox = doc.createElement("bndbox");
 						//bndbox.appendChild(doc.createTextNode(boundingBoxes.get(i).get(j).x));

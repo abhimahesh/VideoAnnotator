@@ -237,7 +237,11 @@ public class ChooseFile extends JFrame implements ActionListener{
 		bf.slider.setMaximum(bf.numOfFrames);
 		Hashtable labelTable = new Hashtable();
 		labelTable.put( new Integer( 1 ), new JLabel("1") );
-		for(int i =100;i<bf.slider_MAX;i = i+100) {
+		int markings = bf.slider_MAX/10 - ((bf.slider_MAX/10)%100);
+		if(markings==0) markings = 10;
+		for(int i =markings;i<bf.slider_MAX;i = i+markings) {
+			if(bf.slider_MAX-i < markings)
+				break;
 			labelTable.put( new Integer( i ), new JLabel(""+i) );
 		}
 		labelTable.put( new Integer( bf.slider_MAX ), new JLabel(""+bf.slider_MAX) );

@@ -96,6 +96,11 @@ public class reloadArray{
 							if(tempNlist.getLength() == 1){
 								property.add(eElement.getElementsByTagName("number").item(0).getTextContent());
 							}
+							tempNlist = eElement.getElementsByTagName("occlusion");
+							if(tempNlist.getLength() == 1){
+								property.add(eElement.getElementsByTagName("occlusion").item(0).getTextContent());
+							}
+							
 							org.w3c.dom.Node tempRect = eElement.getElementsByTagName("bndbox").item(0);
 							Element rt = (Element)tempRect;
 							

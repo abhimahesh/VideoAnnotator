@@ -446,7 +446,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		contentModelLbl.setBounds(12, 71, 168, 27);
 		panel.add(contentModelLbl);
 		
-		contentNumberTf = new JTextField("Vehicle Number");
+		contentNumberTf = new JTextField("");
 		contentNumberTf.setBounds(12, 100, 172, 27);
 		contentNumberTf.setBackground(Color.WHITE);
 		panel.add(contentNumberTf);
@@ -457,12 +457,14 @@ public class BaseFrame implements ActionListener, MouseListener {
 		rdbtnObjectOccluded.setBackground(Color.LIGHT_GRAY);
 		rdbtnObjectOccluded.setBounds(12, 129, 172, 23);
 		panel.add(rdbtnObjectOccluded);
+		rdbtnObjectOccluded.setEnabled(false);
 		rdbtnObjectOccluded.setSelected(false);
 		
 		JRadioButton rdbtnOutOfViewframe = new JRadioButton("Out of ViewFrame");
 		rdbtnOutOfViewframe.setBackground(Color.LIGHT_GRAY);
 		rdbtnOutOfViewframe.setBounds(12, 159, 172, 23);
 		panel.add(rdbtnOutOfViewframe);
+		rdbtnOutOfViewframe.setEnabled(false);
 		
 		btnEdit = new JButton("Update Info");
 		btnEdit.addActionListener(this);

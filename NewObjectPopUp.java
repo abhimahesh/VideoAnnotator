@@ -32,13 +32,13 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	
-	private final String[] categories= new String[]{"Person", "Car", "Bus", "Tractor", "Bike", "Bicycle"};
+	private final String[] categories= new String[]{"Person", "Car", "Bus", "Tractor", "MotorCycle","Three Wheeler","Rickshaw", "Bicycle","Cart"};
 	public final JComboBox cb_category = new JComboBox(categories);
 	public final JComboBox cb_make = new JComboBox();
 	public final JComboBox cb_model = new JComboBox();
 	
-	private ComboBoxModel[] make = new ComboBoxModel[6];
-	private ComboBoxModel[][] model = new ComboBoxModel[15][15];
+	private ComboBoxModel[] make = new ComboBoxModel[9];
+	private ComboBoxModel[][] model = new ComboBoxModel[15][27];
 	public JTextField tf_number;
 	public JRadioButton rdbtnNewObObjectOcculded ;
 	arrObjects arrOb = null;
@@ -85,23 +85,43 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		cb_model.setBounds(147, 103, 167, 24);
 
 		make[0] = new DefaultComboBoxModel(new String[] {"None"});
-		make[1] = new DefaultComboBoxModel(new String[] {"None","Maruti", "Hyundai", "Mahindra","Tata Motors","Honda","Toyota","Renault","Ford","Nissan","Volkswagen"});
-		make[2] = new DefaultComboBoxModel(new String[] {"None","BUS 1", "BUS 2", "BUS 3"});
-		make[3] = new DefaultComboBoxModel(new String[] {"None","Tractor 1"});
-		make[4] = new DefaultComboBoxModel(new String[] {"None", "Bike 1"});
-		make[5] = new DefaultComboBoxModel(new String[] {"None", "Bicycle 1"});
+		make[1] = new DefaultComboBoxModel(new String[] {"None","Maruti", "Hyundai", "Mahindra","Tata Motors","Honda","Toyota","Renault","Ford","Nissan","Volkswagen","Audi","BMW","Cheverolet","Fiat","Jeep","Datsun","Jaguar","Land Rover", "Mercedes-Benz","Mitsubishi","Skoda","Ferrari","Aston Martin","Bugatti","Bentley","Volvo"});
+		make[2] = new DefaultComboBoxModel(new String[] {"None"});
+		make[3] = new DefaultComboBoxModel(new String[] {"None"});
+		make[4] = new DefaultComboBoxModel(new String[] {"None"});
+		make[5] = new DefaultComboBoxModel(new String[] {"None"});
+		make[6] = new DefaultComboBoxModel(new String[] {"None"});
+		make[7] = new DefaultComboBoxModel(new String[] {"None"});
+		make[8] = new DefaultComboBoxModel(new String[] {"None"});
 		
 		model[1][0] = new DefaultComboBoxModel(new String[] {"None"});
-		model[1][1] = new DefaultComboBoxModel(new String[] {"None","Alto 800", "WagonR","Swift","DZire"});
-		model[1][2] = new DefaultComboBoxModel(new String[] {"None","Grand i10","Elite i20"});
-		model[1][3] = new DefaultComboBoxModel(new String[] {"None","Scorpio","XUV 500"," KUV 100"});
-		model[1][4] = new DefaultComboBoxModel(new String[] {"None","Tiago","Hexa","Nexon","Kite V",});
-		model[1][5] = new DefaultComboBoxModel(new String[] {"None","Amaze","Brio","Accord"});
-		model[1][6] = new DefaultComboBoxModel(new String[] {"None","Innova Crysta","Fortuner","Etios"});
-		model[1][7] = new DefaultComboBoxModel(new String[] {"None"});
-		model[1][8] = new DefaultComboBoxModel(new String[] {"None"});
-		model[1][9] = new DefaultComboBoxModel(new String[] {"None"});
-		model[1][10] = new DefaultComboBoxModel(new String[] {"None"});
+		model[1][1] = new DefaultComboBoxModel(new String[] {"None","800","Alto K10", "Alto 800", "WagonR", "Swift", "Swift DZire", "Omni", "Eeco", "Gypsy", "Ertiga", "Celerio", "Ciaz", "Vitara Brezza", "Baleno", "Ignis", "S-Cross"});
+		model[1][2] = new DefaultComboBoxModel(new String[] {"None","Eon", "i10", "i20", "Xcent", "Verna", "Elantra", "Creta", "Tucson"});
+		model[1][3] = new DefaultComboBoxModel(new String[] {"None","Major", "Bolero", "Scorpio", "Thar", "Xylo", "Quanto", "Verito", "Verito Vibe", "Genio", "XUV500", "e2o", "TUV300", "KUV100", "NuvoSport"});
+		model[1][4] = new DefaultComboBoxModel(new String[] {"None","Nano", "Indica", "Vista", "Indigo", "Manza", "Indigo CS", "Sumo", "Movus", "Venture", "Safari", "Xenon", "Aria", "Zest", "Bolt", "Tiago", "Tigor", "Hexa"});
+		model[1][5] = new DefaultComboBoxModel(new String[] {"None", "Brio", "Jazz", "Amaze", "BR-V", "City","Accord"});
+		model[1][6] = new DefaultComboBoxModel(new String[] {"None","Etios Liva", "Etios", "Corolla Altis", "Innova Crysta", "Fortuner", "Camry"});
+		model[1][7] = new DefaultComboBoxModel(new String[] {"None","Pulse", "Duster", "Scala", "Kwid", "Lodgy"});
+		model[1][8] = new DefaultComboBoxModel(new String[] {"None","Figo", "Ecosport", "Endeavour", "Figo Aspire"});
+		model[1][9] = new DefaultComboBoxModel(new String[] {"None","Micra", "Sunny", "Terrano"});
+		model[1][10] = new DefaultComboBoxModel(new String[] {"None","Polo", "Cross Polo", "Vento", "Jetta", "Ameo", "Tiguan"," Beetle"});
+		model[1][11] = new DefaultComboBoxModel(new String[] {"None","A3", "A4", "A6", "Q3", "Q5"});
+		model[1][12] = new DefaultComboBoxModel(new String[] {"None","1 Series", "3 Series", "3 Series GT", "5 Series", "7 Series", "X1", "X3", "X5"});
+		model[1][13] = new DefaultComboBoxModel(new String[] {"None","Spark", "Beat", "Sail", "Cruze", "Tavera", "Enjoy"});
+		model[1][14] = new DefaultComboBoxModel(new String[] {"None","Punto", "Linea", "Avventura", "Urban Cross"});
+		model[1][15] = new DefaultComboBoxModel(new String[] {"None","Compass"});
+		model[1][16] = new DefaultComboBoxModel(new String[] {"None", "Go" , "Go+" , "Redi-Go"});
+		model[1][17] = new DefaultComboBoxModel(new String[] {"None","XE", "XF", "XJ"});
+		model[1][18] = new DefaultComboBoxModel(new String[] {"None","Freelander", "Range Rover"});
+		model[1][19] = new DefaultComboBoxModel(new String[] {"None","C-Class", "E-Class", "M-Class", "GL-Class", "S-Class"});
+		model[1][20] = new DefaultComboBoxModel(new String[] {"None","Pajero"});
+		model[1][21] = new DefaultComboBoxModel(new String[] {"None","Rapid", "Octavia", "Yeti", "Superb", "Kodiaq"});
+		model[1][22] = new DefaultComboBoxModel(new String[] {"None","California", "458 Italia", "F12", "FF"});
+		model[1][23] = new DefaultComboBoxModel(new String[] {"None","Vantage", "Vanquish", "Rapide", "Virage", "DB9", "DBS", "One-77"});
+		model[1][24] = new DefaultComboBoxModel(new String[] {"None","Veyron"});
+		model[1][25] = new DefaultComboBoxModel(new String[] {"None","Arnage", "Azure", "Brooklands", "Continental GT", "Continental Flying Spur", "Mulsanne"});
+		model[1][26] = new DefaultComboBoxModel(new String[] {"None","V40", "S60", "S80", "XC60", "S90", "XC90"});
+		
 		
 	
 		for(int tmp=0;tmp<categories.length;tmp++) {
@@ -149,13 +169,13 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		contentPane.add(tf_number);
 		tf_number.setColumns(10);
 		tf_number.setText(bf.contentNumberTf.getText());
-		if(cb_category.getSelectedIndex()!=1) {
-			tf_number.setText("Not Required");
-			tf_number.setEnabled(false);
-		}
-		else { 
-			tf_number.setEnabled(true);
-		}
+//		if(cb_category.getSelectedIndex()!=1) {
+//			tf_number.setText("Not Required");
+//			tf_number.setEnabled(false);
+//		}
+//		else { 
+//			tf_number.setEnabled(true);
+//		}
 				
 		JLabel lblCategory = new JLabel("Category :");
 		lblCategory.setBounds(29, 36, 89, 15);
@@ -212,7 +232,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 				bf.contentVehLbl.setText("Vehicle Type");
 				bf.contentMakeLbl.setText("Vehicle Make");
 				bf.contentModelLbl.setText("Vehicle Model");
-				bf.contentNumberTf.setText("Vehicle Number");
+				bf.contentNumberTf.setText("");
 				bf.rdbtnObjectOccluded.setSelected(false);
 			}
 			
@@ -261,14 +281,18 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 		cb_make.setModel(make[cb_category.getSelectedIndex()]);
 		cb_model.setModel(model[cb_category.getSelectedIndex()][cb_make.getSelectedIndex()]);
 	
-		if(cb_category.getSelectedIndex()!=1) {
-			tf_number.setText("Not Required");
-			tf_number.setEnabled(false);
-		}
-		else {
-			if(tf_number.getText().equals("Not Required"))
-				tf_number.setText("");
-			tf_number.setEnabled(true);
-		}
+//		if(cb_category.getSelectedIndex()!=1) {
+//			tf_number.setText("Not Required");
+//			tf_number.setEnabled(false);
+//		}
+//		else {
+//			if(tf_number.getText().equals("Not Required"))
+//				tf_number.setText("");
+//			tf_number.setEnabled(true);
+//		}
+		
+		if(tf_number.getText().equals("Not Required"))
+			tf_number.setText("");
+
 	}
 }
