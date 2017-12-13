@@ -37,6 +37,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -50,6 +53,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JLayeredPane;
@@ -71,6 +75,8 @@ public class BaseFrame implements ActionListener, MouseListener {
 	private JPanel area ;
 	public JRadioButton rdbtnObjectOccluded;
 	public JLabel imageViewLabel ;
+	public JButton btnReport;
+	private NewObjectPopUp newOb = null;
 	int width = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth() -60;
 	int height = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight() -60;
 	javax.swing.Timer tm ;
@@ -97,8 +103,10 @@ public class BaseFrame implements ActionListener, MouseListener {
 	
 	public String loadPath = null;
 	public  String xmlPath = null;
+	public  String reportPath = null;
 	public String savePath = null;
 	private JFileChooser jfileChooserXML;
+	private JFileChooser jfileChooserReport;
 	private JTextField speed;
 	private JTextField mcFrmTxtField;
 	//public JFileChooser fc = new JFileChooser();
@@ -515,6 +523,99 @@ public class BaseFrame implements ActionListener, MouseListener {
 		});
 		btnmcFrmaeClear.setBounds(137, 34, 53, 25);
 		manualPanel.add(btnmcFrmaeClear);
+		
+		jfileChooserReport = new JFileChooser();
+		jfileChooserReport.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		btnReport = new JButton("Report");
+		btnReport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(reportPath!=null) {
+		    		jfileChooserReport.setCurrentDirectory(new File(reportPath+"/"));
+		    	}
+				int result = jfileChooserReport.showOpenDialog(null);
+				switch (result) {
+			    case JFileChooser.APPROVE_OPTION:
+			    	File f = jfileChooserReport.getSelectedFile();
+					reportPath= f.getAbsolutePath();
+//					arrOb.genrateXML(rescaleObj);
+					PrintWriter writer = null;
+					try {
+						writer = new PrintWriter(reportPath+"/"+"Report.txt", "UTF-8");
+					} catch (FileNotFoundException | UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					writer.println("Total Number of Frames : "+numOfFrames);
+					int totalBoxes = 0; 
+					for(int i =0;i<arrOb.boundingBoxes.size();++i) totalBoxes+=arrOb.boundingBoxes.get(i).size();
+					
+					int totalNumbers = 0;
+					int catCount[] = new int[9];
+					int carMakeCount[] = new int[27];
+					int carMakeModelCount[][] = new int[27][30];
+					for(int i =0;i<arrOb.properties.size();++i) {
+						for(int j =0;j<arrOb.properties.get(i).size();++j) {
+							String tmp = arrOb.properties.get(i).get(j).get(0).toString();
+							for(int p = 0;p<newOb.categories.length-1;++p) {
+								if(tmp.equals(newOb.categories[p])) {
+									catCount[p]++;
+									if(p==1) {
+										String tmp2 =arrOb.properties.get(i).get(j).get(1).toString();
+										for(int q = 0;q<27;++q) {
+											if(tmp2.equals(newOb.make[p].getElementAt(q))) {
+												carMakeCount[q]++;
+												String tmp3 =arrOb.properties.get(i).get(j).get(2).toString();
+												for(int r = 0;r<newOb.model[p][q].getSize();r++) {
+													if(tmp3.equals(newOb.model[p][q].getElementAt(r))){
+														carMakeModelCount[q][r]++;
+														break;
+													}
+												}
+												break;
+											}
+										}
+										break;
+									}
+									break;
+								}
+							}
+						}
+					}
+					writer.println("=================================================================================");
+					writer.println("VEHICLE CATEGORY COUNTS");
+					writer.println("=================================================================================");
+					for(int i =0;i<newOb.categories.length;++i) 
+						writer.println(""+newOb.categories[i]+" : "+catCount[i]);
+					writer.println("=================================================================================");
+					writer.println("CAR MAKE COUNTS");
+					writer.println("=================================================================================");
+					for(int i =0;i<newOb.make[1].getSize();++i) 
+						writer.println(""+newOb.make[1].getElementAt(i)+" : "+carMakeCount[i] );
+					writer.println("=================================================================================");
+					writer.println("CAR MODEL COUNTS");
+					writer.println("=================================================================================");
+					for(int i =0;i<newOb.make[1].getSize();++i) { 
+						writer.println("\t"+newOb.make[1].getElementAt(i)+" : "+carMakeCount[i] );
+						for(int j =0;j<newOb.model[1][i].getSize();++j) {
+							writer.println("\t\t"+newOb.model[1][i].getElementAt(j)+" : "+carMakeModelCount[i][j] );
+						}
+						writer.println("________________________________________________________________________");
+					}
+					writer.close();
+			    	break;
+			    case JFileChooser.CANCEL_OPTION:
+//			      System.out.println("Cancel or the close-dialog icon was clicked");
+			      break;
+			    case JFileChooser.ERROR_OPTION:
+//			      System.out.println("Error");
+			      break;
+			    }
+			}
+		});
+		btnReport.setBounds(33, 100, 117, 25);
+		manualPanel.add(btnReport);
+		btnReport.setEnabled(false);
 	}
 	public void getImages() {
 		File file = null;
@@ -571,7 +672,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 	        if(mf.rect!=null){
 				//System.out.println(mf.rect);
 				frame.setEnabled(false);
-				NewObjectPopUp newOb = new NewObjectPopUp(this,mf,arrOb);
+				newOb = new NewObjectPopUp(this,mf,arrOb);
 		        newOb.setLocation((int)(width/3), (int)(height/3));
 		        newOb.setVisible(true);
 		        // mf.resetImage() is called from OKbutton  ofNewObjectPopUp 
@@ -583,8 +684,6 @@ public class BaseFrame implements ActionListener, MouseListener {
 				ChooseFile chfOb = new ChooseFile(this);
 				chfOb.setLocation((int)(width/3), (int)(height/3));
 		        chfOb.setVisible(true);
-		        btnEdit.setEnabled(true);
-		        btnNewObject.setEnabled(true);
 			}
 		}
 		else if(e.getSource().equals(btnExit)) {

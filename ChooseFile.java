@@ -251,6 +251,9 @@ public class ChooseFile extends JFrame implements ActionListener{
 		bf.frame.setEnabled(true);
 		bf.btnSAVE.setEnabled(true);
 		bf.btnPausePlay.setEnabled(true);
+		bf.btnEdit.setEnabled(true);
+        bf.btnNewObject.setEnabled(true);
+        bf.btnReport.setEnabled(true);
 		
 	}
 }

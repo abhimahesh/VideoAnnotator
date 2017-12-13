@@ -32,13 +32,13 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
 	
-	private final String[] categories= new String[]{"Person", "Car", "Bus", "Tractor", "MotorCycle","Three Wheeler","Rickshaw", "Bicycle","Cart"};
+	public final String[] categories= new String[]{"Person", "Car", "Bus", "Tractor", "MotorCycle","Three Wheeler","Rickshaw", "Bicycle","Cart"};
 	public final JComboBox cb_category = new JComboBox(categories);
 	public final JComboBox cb_make = new JComboBox();
 	public final JComboBox cb_model = new JComboBox();
 	
-	private ComboBoxModel[] make = new ComboBoxModel[9];
-	private ComboBoxModel[][] model = new ComboBoxModel[15][27];
+	public ComboBoxModel[] make = new ComboBoxModel[9];
+	public ComboBoxModel[][] model = new ComboBoxModel[15][27];
 	public JTextField tf_number;
 	public JRadioButton rdbtnNewObObjectOcculded ;
 	arrObjects arrOb = null;
