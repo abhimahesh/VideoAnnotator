@@ -175,7 +175,13 @@ public class ChooseFile extends JFrame implements ActionListener{
 					bf.xmlPath = xmlPath;
 				else 
 					bf.xmlPath = null;
-				callingpartialBaseFunction();
+				//Create both of these following objects before calling callingpartialBaseFunction()
+//				bf.trackObj = new tracking(bf.loadPath, bf );
+				if(bf.logObj==null)
+					bf.logObj = new log(bf);
+				bf.logObj.createLogFile();
+				//Following callingpartialBaseFunction is called from within log.java/createLogFiles() function
+				//callingpartialBaseFunction();
 			}
 			else if((resultFile!=0 && resultXml != 0) || (!selected && resultXml!=0)) {
 				JOptionPane.showMessageDialog(this,
@@ -201,7 +207,7 @@ public class ChooseFile extends JFrame implements ActionListener{
 			lblXmlFilePath.setEnabled(!selected);
 		}
 	}
-	private void callingpartialBaseFunction() {
+	public void callingpartialBaseFunction() {
 //		System.out.println("abhishekkkkkkk2");
 		bf.getImages();
 		bf.arrOb = new arrObjects(bf.numOfFrames, bf);
@@ -227,10 +233,13 @@ public class ChooseFile extends JFrame implements ActionListener{
 			if(!selected)
 				bf.reloadOb.addImageName(i, bf.imageList[i].split("\\.")[0]);
 		}
+		bf.uniqueBoxId= 0;
 		if(!selected) {
 			bf.reloadOb.readXML(bf.rescaleObj);
 			bf.arrOb.boundingBoxes = bf.reloadOb.boundingBoxes;
 			bf.arrOb.properties = bf.reloadOb.properties;
+			
+			/// last object id retrive;
 		}
 		//showImage(pos);
 		bf.slider_MAX = bf.numOfFrames;

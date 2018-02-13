@@ -18,6 +18,7 @@ public class reloadArray{
 	Vector < Vector <Rectangle> > boundingBoxes;
 	Vector < Vector <Vector <String>> > properties;
 	Vector <String> imageName;
+	int maxObjectId;
 	BaseFrame bf = null;
 	public reloadArray(int tmp, BaseFrame bff){
 		bf = bff;
@@ -47,7 +48,7 @@ public class reloadArray{
 	}
 	
 	public void readXML(rescaleImg obj) {
-		 
+		maxObjectId = -1; 
 		for(int i = 0; i < boundingBoxes.size(); ++i) {
 			try {
 	
@@ -96,9 +97,15 @@ public class reloadArray{
 							if(tempNlist.getLength() == 1){
 								property.add(eElement.getElementsByTagName("number").item(0).getTextContent());
 							}
+							
 							tempNlist = eElement.getElementsByTagName("occlusion");
 							if(tempNlist.getLength() == 1){
 								property.add(eElement.getElementsByTagName("occlusion").item(0).getTextContent());
+							}
+							tempNlist = eElement.getElementsByTagName("objectId");
+							if(tempNlist.getLength() == 1){
+								property.add(eElement.getElementsByTagName("objectId").item(0).getTextContent());
+								maxObjectId = Math.max(maxObjectId, Integer.parseInt(eElement.getElementsByTagName("objectId").item(0).getTextContent()));
 							}
 							
 							org.w3c.dom.Node tempRect = eElement.getElementsByTagName("bndbox").item(0);
@@ -123,6 +130,7 @@ public class reloadArray{
 					e.printStackTrace();
 				    }
 			  }
+		bf.uniqueBoxId = maxObjectId;
 
 	}
 	

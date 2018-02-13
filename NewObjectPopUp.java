@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Vector;
@@ -201,8 +202,9 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 				Vector tmp = new Vector(Arrays.asList(stmp)); 
 				
 				Vector<String> input = new Vector<String>();
+				bf.uniqueBoxId = bf.uniqueBoxId + 1;
 				input.add(stmp[0]);input.add(stmp[1]);input.add(stmp[2]);input.add(stmp[3]);input.add(stmp[4]);
-				
+				input.add("" + bf.uniqueBoxId);
 				//Sending data of this object to arrObjects class
 //				System.out.println(bf.pos+"    :     "+mf.rect);
 				arrOb.recvObj(bf.pos, mf.rect, input);
@@ -225,6 +227,15 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 //				tmp_vec.add(cur_frame); tmp_vec.add(cur_box_in_cur_frame);
 //				bf.msg.addElement(tmp_vec);
 //				
+				
+				//creating output_java file.txt file to be accessed from python tracker
+				//Track object only if user wants to track it otherwise not
+				if(bf.chckbxDeleteAndRetrack.isSelected()) {
+					tracking trkObjThread = new tracking(bf.loadPath, bf,mf.rect , bf.pos,4, input);
+					trkObjThread.start();
+				}
+				
+				//Remaining section of NewObject
 				mf.resetImg();						
 				dispose();
 				bf.frame.setEnabled(true);
@@ -234,6 +245,7 @@ public class NewObjectPopUp extends JFrame implements ActionListener{
 				bf.contentModelLbl.setText("Vehicle Model");
 				bf.contentNumberTf.setText("");
 				bf.rdbtnObjectOccluded.setSelected(false);
+				
 			}
 			
 		});

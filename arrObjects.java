@@ -90,6 +90,11 @@ public class arrObjects {
 						occlusion.appendChild(doc.createTextNode(properties.get(i).get(j).get(4)));
 						object.appendChild(occlusion);
 						
+						Element objectId = doc.createElement("objectId");
+						objectId.appendChild(doc.createTextNode(properties.get(i).get(j).get(5)));
+						object.appendChild(objectId);
+						
+						
 						Element bndbox = doc.createElement("bndbox");
 						//bndbox.appendChild(doc.createTextNode(boundingBoxes.get(i).get(j).x));
 						object.appendChild(bndbox);

@@ -228,6 +228,9 @@ public class MyMouseAdapter implements MouseListener, MouseMotionListener {
 				holdtime = (endtime - starttime) / Math.pow(10,9);
 				if(holdtime>1) {
 					pos_box = getSelected(end);
+					//current box ID to be deleted or to be editied in all further frames wherever this object is found
+					int currBoxID = Integer.parseInt(bff.arrOb.properties.get(bff.pos).get(pos_box).get(5));
+
 					//Removing that selected rectangle
 					Rectangle tmprect = null;
 					tmprect= bff.arrOb.boundingBoxes.get(bff.pos).remove(pos_box);
@@ -247,10 +250,29 @@ public class MyMouseAdapter implements MouseListener, MouseMotionListener {
 			        bff.contentNumberTf.setText(tmpProperty.get(3));
 			        if(tmpProperty.get(4).equals("true"))
 			        	bff.rdbtnObjectOccluded.setSelected(true);
+			        //Delete all further same tracked objects if user wants to (Indicated by bff.chckbxDeleteAndRetrack checkBox)
+			        if(bff.chckbxDeleteAndRetrack.isSelected())
+			        	deleteNextTracked(bff.pos, currBoxID);
+
 				}
 		}
 		holding = false;
 //		System.out.println("Released  "+mf.drawn+"  "+mf.drag+"  "+holding);
+	}
+	public void deleteNextTracked(int frameNum, int currBoxID) {
+		boolean boxFoundFlag= false;
+		for(int i =frameNum+1;i<bff.numOfFrames;i++) {
+			Vector<Vector<String>> tmpAllBox = bff.arrOb.properties.get(i);
+			for(int j = 0;j<tmpAllBox.size();++j) {
+				if(currBoxID == Integer.parseInt(bff.arrOb.properties.get(i).get(j).get(5))) {
+					 bff.arrOb.boundingBoxes.get(i).remove(j);
+					 bff.arrOb.properties.get(i).remove(j);
+					 boxFoundFlag= true;
+				}
+			}
+			if(!boxFoundFlag) break;
+			else boxFoundFlag = false;
+		}
 	}
 	private int getSelected(Point end) {
 		int nearest_box = 0,xc,yc;

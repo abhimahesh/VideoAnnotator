@@ -57,6 +57,7 @@ import javax.xml.crypto.dsig.CanonicalizationMethod;
 import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 import javax.swing.JLayeredPane;
+import java.awt.FlowLayout;
 
 public class BaseFrame implements ActionListener, MouseListener {
 
@@ -65,7 +66,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 //	public static Vector<Vector<Integer>> msg = new Vector<Vector<Integer>>();
 	public static Vector cb_items = new Vector() ;
 //	public static DefaultComboBoxModel mdl = new DefaultComboBoxModel(cb_items);
-	
+	public int uniqueBoxId;
 	public JTextField contentNumberTf;
 	public JButton btnNewObject ;
 	public JButton btnSAVE ;
@@ -83,6 +84,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 	public int numOfFrames = 1;
 	String[] imageList;
 	
+	public JCheckBox chckbxDeleteAndRetrack = null;
 	public arrObjects arrOb = null;
 	public reloadArray reloadOb = null;
 	JButton btnLoad;	
@@ -100,6 +102,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 	public JLabel contentModelLbl ;
 	public JButton btnEdit;
 	public rescaleImg rescaleObj = null;
+	public ChooseFile chfOb =null;
 	
 	public String loadPath = null;
 	public  String xmlPath = null;
@@ -107,13 +110,15 @@ public class BaseFrame implements ActionListener, MouseListener {
 	public String savePath = null;
 	private JFileChooser jfileChooserXML;
 	private JFileChooser jfileChooserReport;
-	private JTextField speed;
+	public JTextField speed;
 	private JTextField mcFrmTxtField;
 	//public JFileChooser fc = new JFileChooser();
 	//public JPanel lBoxPanel;
 	/**
 	 * Launch the application.
 	 */
+	tracking trackObj = null;
+	log logObj = null;
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -182,7 +187,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		panel_viewer.add(imageViewLabel);
 		//showImage(pos);
 		
-//		lBoxPanel= new JPanel();
+//		lBoxPanel= new JPanel();objectId
 //		lBoxPanel.setBounds(0, 0, 1048, 690);
 //		panel_viewer.add(lBoxPanel);
 //		lBoxPanel.setLayout(null);
@@ -536,6 +541,8 @@ public class BaseFrame implements ActionListener, MouseListener {
 				int result = jfileChooserReport.showOpenDialog(null);
 				switch (result) {
 			    case JFileChooser.APPROVE_OPTION:
+			    	if(newOb==null || arrOb==null)
+			    		break;
 			    	File f = jfileChooserReport.getSelectedFile();
 					reportPath= f.getAbsolutePath();
 //					arrOb.genrateXML(rescaleObj);
@@ -616,6 +623,10 @@ public class BaseFrame implements ActionListener, MouseListener {
 		btnReport.setBounds(33, 100, 117, 25);
 		manualPanel.add(btnReport);
 		btnReport.setEnabled(false);
+		
+		chckbxDeleteAndRetrack = new JCheckBox("Retrack again");
+		chckbxDeleteAndRetrack.setBounds(12, 276, 192, 23);
+		panel_content.add(chckbxDeleteAndRetrack);
 	}
 	public void getImages() {
 		File file = null;
@@ -636,6 +647,13 @@ public class BaseFrame implements ActionListener, MouseListener {
 		}
 		Arrays.sort(imageList);
 		numOfFrames = n;
+		
+		//Writing to a file for python script usage
+		String tmp = "";
+		for(int i =0;i<n;++i) {
+			tmp = tmp + imageList[i] + " ";
+		}
+		logObj.createMetaDataFile(loadPath);
 	}
 	public void showImage(int index) {
 		String imageName = imageList[index];
@@ -681,7 +699,7 @@ public class BaseFrame implements ActionListener, MouseListener {
 		else if(e.getSource().equals(btnLoad)) {
 			if(pos==0) {
 				frame.setEnabled(false);
-				ChooseFile chfOb = new ChooseFile(this);
+				chfOb = new ChooseFile(this);
 				chfOb.setLocation((int)(width/3), (int)(height/3));
 		        chfOb.setVisible(true);
 			}
